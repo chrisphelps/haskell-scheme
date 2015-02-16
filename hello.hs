@@ -4,5 +4,8 @@ import System.Environment
 main :: IO ()
 main = do
     args <- getArgs
-    putStrLn ("Hello, " ++ args !! 0)
-    putStrLn ("Welcome to " ++ args !! 1)
+    let nums = fmap read args :: [Int] -- hint that we want [Int]
+    	total = foldl (+) 0 nums
+    putStrLn ("Total = " ++ show total)
+
+    

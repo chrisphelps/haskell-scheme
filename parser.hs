@@ -34,9 +34,13 @@ parseExpr = parseAtom
 escapedChar :: Parser Char
 escapedChar = do
     char '\\'
-    x <- oneOf "\\\""
-    return x
-
+    x <- oneOf "nrt\\\""
+    return $ case x of
+        'n' -> '\n'
+        'r' -> '\r'
+        't' -> '\t'
+        _   -> x
+ 
 parseString :: Parser LispVal
 parseString = do
     char '"'

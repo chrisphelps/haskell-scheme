@@ -28,7 +28,7 @@ spaces = skipMany1 space
 parseExpr :: Parser LispVal
 parseExpr = parseAtom
          <|> parseString
-         <|> parseNumber
+         <|> parseNumberBind
 
 parseString :: Parser LispVal
 parseString = do
@@ -49,3 +49,13 @@ parseAtom = do
 
 parseNumber :: Parser LispVal
 parseNumber = liftM (Number . read) $ many1 digit
+
+parseNumberDo :: Parser LispVal
+parseNumberDo = do
+    d <- many1 digit
+    return $ Number $ read d
+
+parseNumberBind :: Parser LispVal
+parseNumberBind = many1 digit >>= return . Number . read
+
+
